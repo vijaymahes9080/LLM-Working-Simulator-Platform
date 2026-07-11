@@ -134,3 +134,24 @@ def export_session(
         )
     else:
         raise HTTPException(status_code=400, detail="Invalid export format. Choose 'json' or 'pdf'")
+
+class VectorMathRequestSchema(BaseModel):
+    word_a: str
+    op1: str
+    word_b: str
+    op2: str
+    word_c: str
+
+@router.post("/vector-math")
+def vector_math_algebra(req: VectorMathRequestSchema):
+    if not req.word_a or not req.word_b or not req.word_c:
+        raise HTTPException(status_code=400, detail="All words in the equation must be provided")
+    if req.op1 not in ["+", "-"] or req.op2 not in ["+", "-"]:
+        raise HTTPException(status_code=400, detail="Operators must be either '+' or '-'")
+    
+    try:
+        result = llm_service.run_vector_math(req.word_a, req.op1, req.word_b, req.op2, req.word_c)
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+

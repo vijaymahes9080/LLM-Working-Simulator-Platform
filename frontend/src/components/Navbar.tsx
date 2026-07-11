@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
-import { Cpu, LogOut, GraduationCap, BarChart2, Layers, GitCompare, Play, User as UserIcon } from 'lucide-react';
+import { Cpu, LogOut, GraduationCap, BarChart2, Layers, GitCompare, Play, User as UserIcon, Compass } from 'lucide-react';
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -11,11 +11,13 @@ export default function Navbar() {
 
   const navLinks = [
     { href: '/pipeline', label: 'Simulator', icon: Play },
+    { href: '/vector-math', label: 'Vector Math', icon: Compass },
     { href: '/experiment', label: 'Experiments', icon: Layers },
     { href: '/compare', label: 'Compare', icon: GitCompare },
     { href: '/education', label: 'Learn', icon: GraduationCap },
     { href: '/analytics', label: 'Analytics', icon: BarChart2 },
   ];
+
 
   const isActive = (path: string) => pathname === path;
 

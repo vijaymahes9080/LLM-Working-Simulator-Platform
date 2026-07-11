@@ -319,5 +319,130 @@ class LLMService:
             "estimated_cost_usd": round(len(tokens_list) * 0.000002, 6)
         }
 
+    def run_vector_math(self, word_a: str, op1: str, word_b: str, op2: str, word_c: str) -> Dict[str, Any]:
+        # Predefined high-quality semantic space showing exact mathematical alignments
+        # Features: [Gender (Male=1, Female=-1), Royalty, Capitalness, Countryness, Size, Animality, Profession]
+        semantic_space = {
+            "king": [1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+            "queen": [-1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+            "man": [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+            "woman": [-1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+            "prince": [1.0, 0.8, 0.0, 0.0, -0.2, 0.0, 0.0],
+            "princess": [-1.0, 0.8, 0.0, 0.0, -0.2, 0.0, 0.0],
+            "paris": [0.0, 0.0, 1.0, 0.2, 0.0, 0.0, 0.0],
+            "france": [0.0, 0.0, 0.1, 0.9, 0.0, 0.0, 0.0],
+            "berlin": [0.0, 0.0, 1.0, 0.5, 0.0, 0.0, 0.0],
+            "germany": [0.0, 0.0, 0.1, 1.2, 0.0, 0.0, 0.0],
+            "tokyo": [0.0, 0.0, 1.1, 0.1, 0.0, 0.0, 0.0],
+            "japan": [0.0, 0.0, 0.1, 1.0, 0.0, 0.0, 0.0],
+            "london": [0.0, 0.0, 1.0, 0.3, 0.0, 0.0, 0.0],
+            "uk": [0.0, 0.0, 0.1, 0.95, 0.0, 0.0, 0.0],
+            "father": [0.9, 0.0, 0.0, 0.0, 0.8, 0.0, 0.0],
+            "mother": [-0.9, 0.0, 0.0, 0.0, 0.8, 0.0, 0.0],
+            "son": [0.8, 0.0, 0.0, 0.0, -0.8, 0.0, 0.0],
+            "daughter": [-0.8, 0.0, 0.0, 0.0, -0.8, 0.0, 0.0],
+            "boy": [0.9, 0.0, 0.0, 0.0, -0.9, 0.0, 0.0],
+            "girl": [-0.9, 0.0, 0.0, 0.0, -0.9, 0.0, 0.0],
+            "dog": [0.0, 0.0, 0.0, 0.0, 0.5, 1.0, 0.0],
+            "puppy": [0.0, 0.0, 0.0, 0.0, -0.8, 1.1, 0.0],
+            "cat": [0.0, 0.0, 0.0, 0.0, 0.4, 0.9, 0.0],
+            "kitten": [0.0, 0.0, 0.0, 0.0, -0.9, 1.0, 0.0],
+            "lion": [0.0, 0.5, 0.0, 0.0, 0.9, 1.2, 0.0],
+            "cub": [0.0, 0.2, 0.0, 0.0, -0.7, 1.1, 0.0],
+            "actor": [0.8, 0.0, 0.0, 0.0, 0.2, 0.0, 1.0],
+            "actress": [-0.8, 0.0, 0.0, 0.0, 0.2, 0.0, 1.0],
+            "doctor": [0.1, 0.0, 0.0, 0.0, 0.5, 0.0, 1.2],
+            "nurse": [-0.2, 0.0, 0.0, 0.0, 0.4, 0.0, 1.1],
+            "coder": [0.2, 0.0, 0.0, 0.0, 0.1, 0.0, 1.3]
+        }
+
+        # Normalize keys
+        word_a = word_a.lower().strip()
+        word_b = word_b.lower().strip()
+        word_c = word_c.lower().strip()
+
+        # Retrieve vectors
+        vec_a = np.array(semantic_space.get(word_a, [0.0] * 7))
+        vec_b = np.array(semantic_space.get(word_b, [0.0] * 7))
+        vec_c = np.array(semantic_space.get(word_c, [0.0] * 7))
+
+        # Perform operations
+        # Result = vec_a op1 vec_b op2 vec_c
+        res_vec = vec_a.copy()
+        if op1 == "-":
+            res_vec -= vec_b
+        else:
+            res_vec += vec_b
+
+        if op2 == "-":
+            res_vec -= vec_c
+        else:
+            res_vec += vec_c
+
+        # Cosine similarity helper
+        def cos_sim(u, v):
+            norm_u = np.linalg.norm(u)
+            norm_v = np.linalg.norm(v)
+            if norm_u == 0 or norm_v == 0:
+                return 0.0
+            return float(np.dot(u, v) / (norm_u * norm_v))
+
+        # Compute matches
+        matches = []
+        for name, vec in semantic_space.items():
+            sim = cos_sim(res_vec, np.array(vec))
+            matches.append({
+                "word": name,
+                "similarity": round(sim * 100, 2)
+            })
+
+        # Sort matches
+        matches.sort(key=lambda x: x["similarity"], reverse=True)
+
+        # PCA 3D projection of vectors for visualization
+        # We project: origin, vec_a, intermediate (vec_a op1 vec_b), result, and all vocab words
+        all_vecs = [
+            [0.0] * 7, # Origin
+            vec_a.tolist(),
+            (vec_a - vec_b if op1 == "-" else vec_a + vec_b).tolist(),
+            res_vec.tolist()
+        ]
+        
+        vocab_keys = list(semantic_space.keys())
+        for k in vocab_keys:
+            all_vecs.append(semantic_space[k])
+
+        # Compute SVD / PCA to 3D
+        all_vecs_np = np.array(all_vecs)
+        centered = all_vecs_np - np.mean(all_vecs_np, axis=0)
+        u, s, vh = np.linalg.svd(centered, full_matrices=False)
+        pca_coords = (u[:, :3] * s[:3]).tolist()
+
+        # Parse coordinates
+        coord_origin = pca_coords[0]
+        coord_a = pca_coords[1]
+        coord_ab = pca_coords[2]
+        coord_result = pca_coords[3]
+        
+        vocab_coords = []
+        for i, k in enumerate(vocab_keys):
+            idx = 4 + i
+            vocab_coords.append({
+                "word": k,
+                "coord": pca_coords[idx]
+            })
+
+        return {
+            "word_a": word_a,
+            "word_b": word_b,
+            "word_c": word_c,
+            "op1": op1,
+            "op2": op2,
+            "math_path": [coord_origin, coord_a, coord_ab, coord_result],
+            "matches": matches[:10], # Top 10 matches
+            "vocab_coords": vocab_coords
+        }
+
 # Global singleton
 llm_service = LLMService()
+
