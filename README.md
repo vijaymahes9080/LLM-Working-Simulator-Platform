@@ -243,6 +243,21 @@ Vercel is the creator of Next.js and hosts it out-of-the-box with high performan
    - Add `NEXT_PUBLIC_WS_URL` = Your backend WebSocket URL (change `https` to `wss`, e.g. `wss://llm-inside-backend.onrender.com`)
 5. **Deploy**: Click **Deploy**. Vercel will build the project and provide a public URL!
 
+### 3. Host the Frontend on GitHub Pages (Free, Zero Sign-up Required)
+The repository includes a pre-configured **GitHub Actions** workflow (`.github/workflows/deploy.yml`) that automatically builds the Next.js static site and publishes it to GitHub Pages on every push to `main`.
+
+**One-time setup (takes 30 seconds):**
+1. In your GitHub repository, go to **Settings → Pages**.
+2. Under **Source**, select **GitHub Actions**.
+3. That's it! The next push to `main` will trigger the build and deploy automatically.
+
+**Your live site URL will be:**
+```
+https://vijaymahes9080.github.io/LLM-Working-Simulator-Platform/
+```
+
+> **Note:** GitHub Pages only hosts the **static frontend**. The FastAPI backend must still be deployed separately (e.g. Render/Railway) and the `NEXT_PUBLIC_API_URL` environment variable set in the workflow to point to it.
+
 ---
 
 ## 🎮 Usage
