@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import { useAuth } from '@/contexts/AuthContext';
 import { Shield, Users, RefreshCw, AlertTriangle, Key } from 'lucide-react';
+import { API_BASE_URL } from '@/config';
 
 interface UserItem {
   id: number;
@@ -23,7 +24,7 @@ export default function AdminPage() {
     const headers: Record<string, string> = {};
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
-    fetch('http://localhost:8000/analytics/admin/users', { headers })
+    fetch(`${API_BASE_URL}/analytics/admin/users`, { headers })
       .then((res) => {
         if (!res.ok) throw new Error('Unauthorised or database error');
         return res.json();

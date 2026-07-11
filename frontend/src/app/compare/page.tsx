@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import { GitCompare, Sparkles, CheckCircle } from 'lucide-react';
+import { API_BASE_URL } from '@/config';
 
 interface ModelSpec {
   id: string;
@@ -23,7 +24,7 @@ export default function ComparePage() {
 
   useEffect(() => {
     // Retrieve supported models from backend
-    fetch('http://localhost:8000/models/list')
+    fetch(`${API_BASE_URL}/models/list`)
       .then((res) => res.json())
       .then((data) => {
         setModels(data);
@@ -43,7 +44,7 @@ export default function ComparePage() {
   useEffect(() => {
     if (!modelA || !modelB) return;
     
-    fetch(`http://localhost:8000/models/compare?model_a=${modelA}&model_b=${modelB}`)
+    fetch(`${API_BASE_URL}/models/compare?model_a=${modelA}&model_b=${modelB}`)
       .then((res) => res.json())
       .then((data) => {
         setComparison(data);

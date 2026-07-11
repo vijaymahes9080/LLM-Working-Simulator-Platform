@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Navbar from '@/components/Navbar';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Compass, Play, Sparkles, ChevronDown } from 'lucide-react';
+import { API_BASE_URL } from '@/config';
 
 // ── Types ──────────────────────────────────────────────────────────────────
 interface VecCoord { word: string; coord: number[] }
@@ -230,7 +231,7 @@ export default function VectorMathPage() {
   const runAlgebra = async () => {
     setLoading(true); setError(null);
     try {
-      const res = await fetch('http://localhost:8000/simulate/vector-math', {
+      const res = await fetch(`${API_BASE_URL}/simulate/vector-math`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ word_a: wordA, op1, word_b: wordB, op2, word_c: wordC }),

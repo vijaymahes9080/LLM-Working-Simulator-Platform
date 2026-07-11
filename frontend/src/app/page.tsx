@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { Cpu, ArrowRight, Play, Sparkles, BookOpen, Layers, Lock, Mail, Key } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { API_BASE_URL } from '@/config';
 
 export default function Home() {
   const router = useRouter();
@@ -46,7 +47,7 @@ export default function Home() {
     const endpoint = isRegistering ? 'register' : 'login';
 
     try {
-      const response = await fetch(`http://localhost:8000/auth/${endpoint}`, {
+      const response = await fetch(`${API_BASE_URL}/auth/${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -70,7 +71,7 @@ export default function Home() {
     setLoading(true);
     setError('');
     try {
-      const response = await fetch('http://localhost:8000/auth/guest', {
+      const response = await fetch(`${API_BASE_URL}/auth/guest`, {
         method: 'POST',
       });
       const data = await response.json();

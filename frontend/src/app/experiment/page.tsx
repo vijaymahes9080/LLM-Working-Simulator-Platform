@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar';
 import { useAuth } from '@/contexts/AuthContext';
 import { Layers, Play, RefreshCw, HelpCircle, Sliders } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { API_BASE_URL } from '@/config';
 
 export default function ExperimentPage() {
   const { token } = useAuth();
@@ -35,7 +36,7 @@ export default function ExperimentPage() {
 
     try {
       // Fetch Config A
-      const reqA = fetch('http://localhost:8000/simulate/run', {
+      const reqA = fetch(`${API_BASE_URL}/simulate/run`, {
         method: 'POST',
         headers,
         body: JSON.stringify({
@@ -48,7 +49,7 @@ export default function ExperimentPage() {
       });
 
       // Fetch Config B
-      const reqB = fetch('http://localhost:8000/simulate/run', {
+      const reqB = fetch(`${API_BASE_URL}/simulate/run`, {
         method: 'POST',
         headers,
         body: JSON.stringify({

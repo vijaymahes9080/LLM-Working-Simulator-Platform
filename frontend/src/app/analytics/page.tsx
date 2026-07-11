@@ -3,13 +3,14 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import { BarChart2, Shield, Users, HelpCircle, Activity, Zap } from 'lucide-react';
+import { API_BASE_URL } from '@/config';
 
 export default function AnalyticsPage() {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:8000/analytics/dashboard')
+    fetch(`${API_BASE_URL}/analytics/dashboard`)
       .then(res => res.json())
       .then(d => {
         setData(d);

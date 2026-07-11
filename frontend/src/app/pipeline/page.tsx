@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import { useAuth } from '@/contexts/AuthContext';
 import { useSimulation } from '@/hooks/useSimulation';
+import { API_BASE_URL } from '@/config';
 import {
   InputStage,
   CleaningStage,
@@ -84,7 +85,7 @@ export default function PipelinePage() {
     };
 
     try {
-      const response = await fetch(`http://localhost:8000/simulate/export/${format}`, {
+      const response = await fetch(`${API_BASE_URL}/simulate/export/${format}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

@@ -213,6 +213,38 @@ npm run dev
 
 ---
 
+## 🌐 Deployment & Hosting Guide
+
+LLM INSIDE is built as a decouple architecture (Next.js frontend + FastAPI backend). Here is how you can host the full project for free on the cloud.
+
+### 1. Host the Backend (FastAPI) on Render / Railway
+Render and Railway connect directly to GitHub and build Python applications natively.
+
+1. **Sign Up**: Go to [Render](https://render.com) or [Railway](https://railway.app).
+2. **New Service**: Select **Web Service** and connect this GitHub repository.
+3. **Configure Service**:
+   - **Root Directory**: `backend`
+   - **Build Command**: `pip install -r requirements.txt`
+   - **Start Command**: `python -m uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+4. **Environment Variables**:
+   - `DATABASE_URL` (optional): If using a external PostgreSQL database. Otherwise, Render will write a local SQLite `llm_inside.db` file (use Render Disk to make it persistent).
+5. **URL**: Copy the resulting deployment URL (e.g. `https://llm-inside-backend.onrender.com`).
+
+### 2. Host the Frontend (Next.js) on Vercel
+Vercel is the creator of Next.js and hosts it out-of-the-box with high performance.
+
+1. **Sign Up**: Go to [Vercel](https://vercel.com).
+2. **Import Project**: Select **New Project** and import this repository.
+3. **Configure Project**:
+   - **Root Directory**: `frontend`
+   - **Framework Preset**: Next.js
+4. **Add Environment Variables**:
+   - Add `NEXT_PUBLIC_API_URL` = Your backend URL (e.g. `https://llm-inside-backend.onrender.com`)
+   - Add `NEXT_PUBLIC_WS_URL` = Your backend WebSocket URL (change `https` to `wss`, e.g. `wss://llm-inside-backend.onrender.com`)
+5. **Deploy**: Click **Deploy**. Vercel will build the project and provide a public URL!
+
+---
+
 ## 🎮 Usage
 
 | Feature | URL | Description |

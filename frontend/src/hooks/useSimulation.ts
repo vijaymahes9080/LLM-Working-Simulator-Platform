@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
+import { API_BASE_URL, WS_BASE_URL } from '@/config';
 
 export interface TokenInfo {
   text: string;
@@ -59,7 +60,7 @@ export function useSimulation() {
 
     // Try WebSocket connection
     try {
-      const wsUrl = `ws://localhost:8000/ws/simulation`;
+      const wsUrl = `${WS_BASE_URL}/ws/simulation`;
       const ws = new WebSocket(wsUrl);
       wsRef.current = ws;
 
@@ -118,7 +119,7 @@ export function useSimulation() {
         headers['Authorization'] = `Bearer ${token}`;
       }
 
-      const response = await fetch('http://localhost:8000/simulate/run', {
+      const response = await fetch(`${API_BASE_URL}/simulate/run`, {
         method: 'POST',
         headers,
         body: JSON.stringify({
