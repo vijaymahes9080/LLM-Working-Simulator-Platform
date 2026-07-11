@@ -249,14 +249,17 @@ The repository includes a pre-configured **GitHub Actions** workflow (`.github/w
 **One-time setup (takes 30 seconds):**
 1. In your GitHub repository, go to **Settings → Pages**.
 2. Under **Source**, select **GitHub Actions**.
-3. That's it! The next push to `main` will trigger the build and deploy automatically.
+3. *(Optional)* To connect a live backend, go to **Settings → Secrets and variables → Actions** and add:
+   - `NEXT_PUBLIC_API_URL` = `https://your-backend.onrender.com`
+   - `NEXT_PUBLIC_WS_URL` = `wss://your-backend.onrender.com`
+4. Push any change to `main` (or click **Actions → Run workflow**) to trigger the first deploy.
 
 **Your live site URL will be:**
 ```
 https://vijaymahes9080.github.io/LLM-Working-Simulator-Platform/
 ```
 
-> **Note:** GitHub Pages only hosts the **static frontend**. The FastAPI backend must still be deployed separately (e.g. Render/Railway) and the `NEXT_PUBLIC_API_URL` environment variable set in the workflow to point to it.
+> **Note:** GitHub Pages only hosts the **static frontend**. The FastAPI backend must still be deployed separately (e.g. Render/Railway) using the guide above.
 
 ---
 
