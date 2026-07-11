@@ -1,136 +1,114 @@
-# 🧠 LLM Working Simulator Platform
+<div align="center">
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Python-3.12-blue?logo=python&logoColor=white" />
-  <img src="https://img.shields.io/badge/FastAPI-0.111-009688?logo=fastapi&logoColor=white" />
-  <img src="https://img.shields.io/badge/Next.js-14-black?logo=next.js&logoColor=white" />
-  <img src="https://img.shields.io/badge/PyTorch-CPU-EE4C2C?logo=pytorch&logoColor=white" />
-  <img src="https://img.shields.io/badge/License-MIT-green" />
-  <img src="https://img.shields.io/badge/Status-Active-brightgreen" />
-</p>
+![LLM INSIDE Hero Banner](docs/hero_banner.png)
 
-<p align="center">
-  An interactive educational and developer experimentation platform that <strong>visually simulates</strong> how Large Language Models process text internally — stage by stage, in real time.
-</p>
+<br/>
+
+<img src="https://img.shields.io/badge/Python-3.12-blue?logo=python&logoColor=white&style=for-the-badge" />
+<img src="https://img.shields.io/badge/FastAPI-0.111-009688?logo=fastapi&logoColor=white&style=for-the-badge" />
+<img src="https://img.shields.io/badge/Next.js-14-black?logo=next.js&logoColor=white&style=for-the-badge" />
+<img src="https://img.shields.io/badge/PyTorch-CPU-EE4C2C?logo=pytorch&logoColor=white&style=for-the-badge" />
+<img src="https://img.shields.io/badge/License-MIT-8B5CF6?style=for-the-badge" />
+<img src="https://img.shields.io/badge/Status-Active-10B981?style=for-the-badge" />
+
+<br/><br/>
+
+> **An interactive educational platform that visually simulates how Large Language Models process text — stage by stage, in real time.**
+
+</div>
 
 ---
 
 ## 📚 Table of Contents
 
-- [Overview](#overview)
-- [Features](#features)
-- [System Architecture](#system-architecture)
-- [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
-- [Installation & Setup](#installation--setup)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [Author](#author)
-- [License](#license)
+- [Overview](#-overview)
+- [Live Feature Previews](#-live-feature-previews)
+- [Processing Pipeline](#-processing-pipeline)
+- [Tech Stack](#-tech-stack)
+- [Project Structure](#-project-structure)
+- [Installation & Setup](#-installation--setup)
+- [Usage](#-usage)
+- [Contributing](#-contributing)
+- [Author](#-author)
+- [License](#-license)
 
 ---
 
-## Overview
+## 🧠 Overview
 
-**LLM Working Simulator Platform** (codename **LLM INSIDE**) demystifies the inner workings of transformer-based language models. Users can feed any text prompt and watch it travel through every processing stage — from raw characters to probability distributions and final token output — with scientific equations, attention heatmaps, and interactive visualizations at each step.
+**LLM INSIDE** demystifies the inner workings of transformer-based language models. Feed any text prompt and watch it travel through every processing stage — from raw characters to probability distributions and final generated output — with scientific equations, attention heatmaps, and interactive visualizations at each step.
 
-Whether you are a student, researcher, or engineer, this platform turns abstract NLP theory into an explorable, hands-on experience.
-
----
-
-## ✨ Features
-
-| Feature | Description |
-|---|---|
-| 🔬 **Pipeline View** | Step through all 12 transformer stages with equations and diagrams |
-| 🧪 **Experiment Lab** | Compare Temperature, Top-K, Top-P, and tokenizer strategies side-by-side |
-| 🤖 **Model Comparison** | Head-to-head structural diff between BERT, GPT-2, and Llama 3 |
-| 📈 **Analytics Dashboard** | Session history, token throughput, latency metrics, and export tools |
-| 🎓 **Interactive Quiz** | Earn rewards by solving transformer equations (powered by particle animations) |
-| 📡 **Real-time Streaming** | WebSocket-driven live simulation with per-stage progress updates |
-| 📥 **Export** | Download simulation results as JSON or PDF |
-| 🔐 **Auth** | JWT-based user authentication with role-based access |
-| 🗄️ **Flexible DB** | SQLite for local dev, PostgreSQL-ready for production |
+Whether you are a **student**, **researcher**, or **engineer**, this platform turns abstract NLP theory into an explorable, hands-on experience.
 
 ---
 
-## System Architecture
+## 🖼️ Live Feature Previews
 
-```text
-User Input (prompt text)
-        │
-        ▼
-┌──────────────────┐
-│  Preprocessing   │  Strip, normalize, clean
-└────────┬─────────┘
-         │
-         ▼
-┌──────────────────────────────────┐
-│  Tokenization                    │  BPE / WordPiece / SentencePiece
-└────────┬─────────────────────────┘
-         │
-         ▼
-┌──────────────────┐
-│  Token IDs       │  Vocabulary mapping  (vocab size ~50,257 for GPT-2)
-└────────┬─────────┘
-         │
-         ▼
-┌──────────────────────────┐
-│  Embeddings              │  High-dimensional semantic vectors  (d_model = 768)
-└────────┬─────────────────┘
-         │
-         ▼
-┌────────────────────────────────┐
-│  Positional Encoding           │  Sinusoidal waves / RoPE
-└────────┬───────────────────────┘
-         │
-         ▼
-┌─────────────────────────────────────┐
-│  Transformer Block × N layers       │
-│  ┌──────────────────────────────┐   │
-│  │  Multi-Head Self-Attention   │   │  Scaled dot-product attention
-│  └──────────────────────────────┘   │
-│  ┌──────────────────────────────┐   │
-│  │  Feed-Forward Network        │   │  GELU activation, 4× expansion
-│  └──────────────────────────────┘   │
-└────────┬────────────────────────────┘
-         │
-         ▼
-┌──────────────────────────────────────┐
-│  Output Probability Distribution     │  Temperature · Top-P · Top-K sampling
-└────────┬─────────────────────────────┘
-         │
-         ▼
-┌──────────────────────────┐
-│  Autoregressive Output   │  Token-by-token generation → decoded text
-└──────────────────────────┘
-```
+### 🔢 Semantic Vector Math Sandbox
+> Perform arithmetic on word embeddings — `King − Man + Woman = Queen` — and watch the algebra play out in interactive 3D space.
+
+![Vector Math Sandbox](docs/vector_math_preview.png)
+
+---
+
+### 🧩 Multi-Head Self-Attention Heatmap
+> Explore how different attention heads route information between tokens. Hover any cell to inspect exact attention weights.
+
+![Attention Heatmap](docs/attention_heatmap.png)
+
+---
+
+## 🔬 Processing Pipeline
+
+Every prompt passes through 12 scientifically-grounded stages before output is generated.
+
+<div align="center">
+
+![LLM Pipeline Diagram](docs/pipeline_diagram.png)
+
+</div>
+
+| Stage | Name | Description |
+|:---:|---|---|
+| **1** | Input Processing | Raw text ingestion and character/word analysis |
+| **2** | Cleaning & Normalization | Unicode normalisation, lowercase folding |
+| **3** | Tokenization | BPE / WordPiece / SentencePiece subword splitting |
+| **4** | Token IDs | Vocabulary integer mapping (GPT-2: 50,257 tokens) |
+| **5** | Embeddings | Dense vector projection into `d_model`-dimensional space |
+| **6** | Positional Encoding | Sinusoidal waves / RoPE injecting sequence order |
+| **7** | Transformer Blocks | N stacked layers with residual skip connections |
+| **8** | Multi-Head Attention | Scaled dot-product attention: `softmax(QKᵀ/√dₖ)V` |
+| **9** | Feed-Forward Network | GELU-activated 4× expansion and compression |
+| **10** | Hidden States | Final contextualized vector representations |
+| **11** | Next Token Prediction | Softmax probability distribution over vocabulary |
+| **12** | Autoregressive Output | Token-by-token generation loop |
 
 ---
 
 ## 🛠️ Tech Stack
 
+![Tech Stack](docs/tech_stack.png)
+
 ### Backend
-| Technology | Role |
-|---|---|
-| **Python 3.12** | Runtime |
-| **FastAPI** | REST API + WebSocket server |
-| **Uvicorn** | ASGI server |
-| **PyTorch (CPU)** | LLM inference engine |
-| **HuggingFace Transformers** | `distilgpt2` / `gpt2` model loading |
-| **SQLAlchemy** | ORM |
-| **SQLite / PostgreSQL** | Database |
-| **JWT / OAuth2** | Authentication |
+| Technology | Version | Role |
+|---|---|---|
+| **Python** | 3.12 | Runtime |
+| **FastAPI** | 0.111 | REST API + WebSocket server |
+| **Uvicorn** | Latest | ASGI server |
+| **PyTorch** | CPU | LLM inference engine |
+| **HuggingFace Transformers** | Latest | `distilgpt2` / `gpt2` model loading |
+| **SQLAlchemy** | 2.x | ORM |
+| **SQLite** | Built-in | Default database |
 
 ### Frontend
-| Technology | Role |
-|---|---|
-| **Next.js 14** | React framework (App Router) |
-| **React 18** | UI library |
-| **TypeScript** | Type-safe code |
-| **Tailwind CSS** | Utility-first styling |
-| **Framer Motion** | Animations & transitions |
-| **HTML Canvas** | Rotatable 3D PCA vector-space projections |
+| Technology | Version | Role |
+|---|---|---|
+| **Next.js** | 14 | React framework (App Router) |
+| **React** | 18 | UI library |
+| **TypeScript** | 5 | Type-safe code |
+| **Tailwind CSS** | 3 | Utility-first styling |
+| **Framer Motion** | Latest | Animations & transitions |
+| **HTML Canvas** | — | Rotatable 3D PCA vector projections |
 
 ---
 
@@ -140,24 +118,46 @@ User Input (prompt text)
 LLM-Working-Simulator-Platform/
 ├── backend/
 │   ├── app/
-│   │   ├── main.py               # FastAPI app entry point
+│   │   ├── main.py               # FastAPI entry point + WebSocket
 │   │   ├── database.py           # SQLAlchemy engine & session
 │   │   ├── models/               # ORM models (user, session, analytics)
 │   │   ├── routers/              # API route handlers
-│   │   └── services/             # Business logic (LLM, auth, export)
-│   └── requirements.txt          # Python dependencies
+│   │   │   ├── auth.py
+│   │   │   ├── simulation.py     # /simulate/run, /vector-math, /export
+│   │   │   ├── models.py
+│   │   │   └── analytics.py
+│   │   └── services/
+│   │       ├── llm_service.py    # LLM inference + vector algebra engine
+│   │       ├── auth_service.py
+│   │       └── export_service.py
+│   └── requirements.txt
 ├── frontend/
 │   ├── src/
-│   │   ├── app/                  # Next.js App Router pages
-│   │   ├── components/           # Reusable React components
-│   │   ├── contexts/             # React context providers
-│   │   └── hooks/                # Custom React hooks
-│   ├── public/                   # Static assets
+│   │   ├── app/
+│   │   │   ├── page.tsx           # Login / Landing
+│   │   │   ├── pipeline/          # 12-stage simulator
+│   │   │   ├── vector-math/       # Semantic Vector Math Sandbox ✨
+│   │   │   ├── experiment/        # A/B parameter comparison lab
+│   │   │   ├── compare/           # Model architecture comparer
+│   │   │   ├── education/         # Interactive quiz
+│   │   │   ├── analytics/         # Session analytics dashboard
+│   │   │   └── admin/             # Admin panel
+│   │   ├── components/
+│   │   │   ├── Navbar.tsx
+│   │   │   └── stages/
+│   │   │       └── StageVisualizers.tsx
+│   │   ├── contexts/AuthContext.tsx
+│   │   └── hooks/useSimulation.ts
 │   └── package.json
 ├── docs/
-│   ├── architectural_models.md   # LLM architecture deep-dives
-│   └── trading_models.md         # Financial model comparisons
-├── composer.json                 # PHP project metadata / author info
+│   ├── hero_banner.png
+│   ├── pipeline_diagram.png
+│   ├── vector_math_preview.png
+│   ├── attention_heatmap.png
+│   ├── tech_stack.png
+│   ├── architectural_models.md
+│   └── trading_models.md
+├── composer.json
 ├── run_platform.bat              # One-click Windows launcher
 ├── .gitignore
 ├── LICENSE
@@ -176,11 +176,11 @@ LLM-Working-Simulator-Platform/
 
 ### ⚡ Quick Start (Windows)
 
-Double-click **`run_platform.bat`** in the project root. It will automatically start the FastAPI backend and Next.js frontend concurrently.
+Double-click **`run_platform.bat`** in the project root — it automatically starts the FastAPI backend and Next.js frontend concurrently.
 
 ### Manual Setup
 
-#### 1. Clone the Repository
+#### 1. Clone
 
 ```bash
 git clone https://github.com/vijaymahes9080/LLM-Working-Simulator-Platform.git
@@ -192,14 +192,14 @@ cd LLM-Working-Simulator-Platform
 ```bash
 cd backend
 python -m venv .venv
-.venv\Scripts\activate          # Windows
-# source .venv/bin/activate     # macOS / Linux
+.venv\Scripts\activate        # Windows
+# source .venv/bin/activate   # macOS / Linux
 pip install -r requirements.txt
 python -m uvicorn app.main:app --reload --port 8000
 ```
 
-API available at: `http://localhost:8000`  
-Interactive docs: `http://localhost:8000/docs`
+- API: `http://localhost:8000`
+- Swagger docs: `http://localhost:8000/docs`
 
 #### 3. Frontend
 
@@ -209,40 +209,50 @@ npm install
 npm run dev
 ```
 
-App available at: `http://localhost:3000`
+- App: `http://localhost:3000`
 
 ---
 
 ## 🎮 Usage
 
-1. Open `http://localhost:3000` in your browser.
-2. Register / log in with your credentials.
-3. Enter any text prompt in the **Simulator** panel.
-4. Click **Run Simulation** and watch the pipeline animate in real time.
-5. Explore individual stages, attention heatmaps, and token probability charts.
-6. Use the **Experiment Lab** to tweak sampling parameters and compare outputs.
-7. Export your session as JSON or PDF from the **Analytics** page.
+| Feature | URL | Description |
+|---|---|---|
+| 🏠 Login | `/` | Register / Login / Guest mode |
+| 🔬 Simulator | `/pipeline` | 12-stage live LLM simulation |
+| 🧮 Vector Math | `/vector-math` | Semantic embedding algebra sandbox |
+| 🧪 Experiments | `/experiment` | A/B parameter comparison lab |
+| 🤖 Compare | `/compare` | Model architecture side-by-side diff |
+| 🎓 Learn | `/education` | Interactive transformer equations quiz |
+| 📊 Analytics | `/analytics` | Session history and token metrics |
+
+---
+
+## ✨ Key Features
+
+- 📡 **Real-time WebSocket** streaming — see each pipeline stage animate as it runs
+- 🔢 **Vector Math Sandbox** — `King − Man + Woman = Queen` with 3D PCA canvas
+- 🧩 **Attention Heatmaps** — per-head interactive matrices with hover inspection
+- 🌐 **3D Embedding Projector** — drag-rotatable PCA vector-space visualization
+- 🧪 **A/B Experiment Lab** — run two parameter configs simultaneously
+- 📥 **Export** — download simulation results as JSON or PDF
+- 🔐 **JWT Auth** — role-based access (user / guest / admin)
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please follow these steps:
-
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature/your-feature-name`
 3. Commit your changes: `git commit -m "feat: add your feature"`
-4. Push to your branch: `git push origin feature/your-feature-name`
+4. Push: `git push origin feature/your-feature-name`
 5. Open a Pull Request
-
-Please ensure your code follows existing patterns and includes appropriate documentation.
 
 ---
 
 ## 👤 Author
 
-**Vijay Mahes**  
-📧 [Vijaypradhap2004@gmail.com](mailto:Vijaypradhap2004@gmail.com)  
+**Vijay Mahes**
+📧 [Vijaypradhap2004@gmail.com](mailto:Vijaypradhap2004@gmail.com)
 🐙 [@vijaymahes9080](https://github.com/vijaymahes9080)
 
 ---
@@ -250,3 +260,11 @@ Please ensure your code follows existing patterns and includes appropriate docum
 ## 📄 License
 
 This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
+
+<div align="center">
+
+<br/>
+
+*Built with ❤️ to make AI education visual, interactive, and intuitive.*
+
+</div>
